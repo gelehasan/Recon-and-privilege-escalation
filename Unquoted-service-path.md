@@ -15,3 +15,15 @@ This leads to confusion it thinks the user entered multiple arguments in the com
 # Step one
 Finding unquoted service path using powershell
 <pre>Get-WmiObject -class Win32_Service -Property Name, DisplayName, PathName, StartMode | Where {$_.PathName -notlike "C:\Windows*" -and $_.PathName -notlike '"*'} | select Name,DisplayName,StartMode,PathName</pre>
+
+**To exploit this vulnerablity, you should be able to modify one of the folders listed in there**
+Let's start by checking permision and once we find a folder we can edit, we put our payload there.
+Stop the service then start the service again
+
+<pre>Get-Acl "C:\Program Files" | Format-List
+</pre>
+
+
+***Stop service, then start it again**
+<pre>Stop-Service -Name "ServiceName"</pre>
+<pre>Star-Service -Name "ServiceName"</pre>
